@@ -1,0 +1,94 @@
+<% include ./partials/header %>
+<main>
+    <div class="container">
+        <h2>CRYPTOCURRENCY REGRET CALCULATOR</h2>
+        
+        <!-- FORM ------------------------------------->
+        
+        <form method="GET" onsubmit="submitForm(); return false;">
+            <div class="form-group font-large">
+                if I saved $
+                <input id="saving" type="number" name="saving" value="25" required>
+                USD worth of
+            </div>
+            <div id="images">
+                <div id="btc">
+                    <img src="/images/bitcoin.png" class="bitcoin crypto-btn selected">
+                    <p>Bitcoin</p>
+                </div>
+                <div id="eth">
+                    <img src="/images/ethereum.png" class="ethereum crypto-btn">
+                    <p>Ethereum</p>
+                </div>
+                <div id="ltc">
+                    <img src="/images/litecoin.png" class="litecoin crypto-btn">
+                    <p>Litecoin</p>
+                </div>
+                <div id="dash">
+                    <img src="/images/dash.png" class="dash crypto-btn">
+                    <p>Dash</p>
+                </div>
+                <div id="xmr">
+                    <img src="/images/monero.png" class="monero crypto-btn">
+                    <p>Monero</p>
+                </div>
+            </div>
+            <div class="form-group font-large">
+            every month starting from
+            <div id="oldest"></div>
+            </div>
+            <div class="form-group font-medium">
+                <select id="day" name="day">
+                    <option>1</option>
+                    <option>5</option>
+                    <option>10</option>
+                    <option selected>15</option>
+                    <option>20</option>
+                    <option>25</option>
+                </select>
+                <select id="month" name="month">
+                    <option value="Jan">January</option>
+                    <option value="Feb">February</option>
+                    <option value="Mar">March</option>
+                    <option value="Apr">April</option>
+                    <option value="May">May</option>
+                    <option value="Jun">June</option>
+                    <option value="Jul">July</option>
+                    <option value="Aug">August</option>
+                    <option value="Sep">September</option>
+                    <option value="Oct">October</option>
+                    <option value="Nov" selected>November</option>
+                    <option value="Dec">December</option>
+                </select>
+                <select id="year" name="year">
+                    <option>2017</option>
+                    <option>2016</option>
+                    <option>2015</option>
+                    <option selected>2014</option>
+                    <option>2013</option>
+                </select>
+            </div>
+            <button class="btn btn btn-info">calculate</button>
+        </form>
+        <hr>
+        
+        <!-- CALCULATED DATA ------------------------->
+        
+        <div id="summary-title"></div>
+        <div id="summary"></div>
+        <div id="performance-title"></div>
+        <div id="chart">
+            <canvas id="cryptoChart"></canvas>
+            </div>
+        <div id="table"></div>
+        <div id="disclaimer"></div>
+    </div>
+</main>   
+<script data-main="javascripts/require/config.js" src="javascripts/require/require.js"></script>
+<script>
+    require(["config"], function() {
+        require(["javascripts/main.js"]);
+    });
+</script>
+
+<% include ./partials/footer %>

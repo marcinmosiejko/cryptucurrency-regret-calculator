@@ -1,0 +1,221 @@
+/* ------------- GEENRAL ------------- */
+
+html, body {
+    height: 100%;
+}
+
+body {
+    background-color: #eee;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    position: relative;
+    height: auto !important;
+    min-height: 100%;
+    margin-bottom: -35px; /* footer height */
+}
+
+h2, h3 {
+    text-align: center;
+    margin: 30px 0;
+    text-transform: uppercase;
+}
+
+hr {
+    border-top: 1px solid #8c8b8b;
+}
+
+
+canvas {
+    padding: 0 50px 50px 0;
+}
+
+
+.container {
+    padding: 0 5px;
+    max-width: 1000px;
+}
+
+.font-large {
+    font-size: 20px;
+}
+
+.font-medium {
+    font-size: 16px;
+}
+
+/* ------------- form ------------- */
+
+form {
+    text-align: center;
+}
+
+select[name=crypto] {
+    display: none;
+}
+
+input[type=number] {
+    width: 90px;
+}
+
+input[value] {
+    background-color: #eee;
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 500;
+    outline: none;
+    border: 2px solid #ccc;
+}
+
+button {
+    margin-top: 10px;
+    box-shadow: 3px 3px 1px #999;
+}
+
+#oldest {
+    text-align: center;
+    font-style: italic;
+    font-size: 12px;
+    margin-top: 1px;
+}
+
+/* ------------- crypto buttons ------------- */
+
+.btn {
+    font-size: 15px;
+    border: solid 1px #aaa;
+}
+
+.selected {
+    border: 3px solid #0de877;
+    border-radius: 50%;
+    box-shadow: 5px 5px 3px #999;
+}
+
+#chart {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+#images img {
+    width: 60px;
+    margin: 15px 20px 5px 20px;
+}
+
+#images img:hover {
+    width: 70px;
+    margin: 10px 15px 0px 15px;
+}
+
+#images div {
+    display: inline-block;
+}
+
+/* ------------- table ------------- */
+
+thead {
+    background-color: #333;
+    color: white;
+}
+
+thead th {
+    text-align: right;
+}
+
+thead th:nth-of-type(1) {
+    text-align: left;
+}
+
+td {
+    text-align: right;
+}
+
+td:nth-of-type(1) {
+    text-align: left;
+}
+
+.table {
+    margin-bottom: 5px;
+    margin-top: 0;
+    border: solid 1px #333;
+    font-size: 16px;
+}
+
+#summary {
+    max-width: 600px;
+    margin: 0 auto 50px auto;
+}
+
+#summary td {
+    text-align: center;
+}
+
+#summary th {
+    text-align: center;
+}
+
+/* ------------- footer ------------- */
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    height: 35px;
+    margin: 0;
+    padding: 0;
+    
+}
+
+footer p {
+    line-height: 35px;
+    font-size: 13px;
+    margin: 0;
+    padding: 0;
+    
+}
+
+/* ------------- articles ------------- */
+
+article {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+article p {
+    font-size: 17px;
+    text-align: justify;
+}
+
+article p:last-child {
+    margin-bottom: 60px;
+}
+
+.banner {
+    
+    width: 100%;
+    padding-bottom: 15px;
+}
+
+/* ------------- others ------------- */
+
+#disclaimer {
+    padding-left: 5px;
+    margin: 0 0 60px 0; /*  */
+    font-size: 13px;
+    color: #333;
+    font-style: italic;
+}
+
+
+@media(max-width: 500px) {
+    .table {
+        font-size: 14px;
+    }
+    #images img {
+        width: 50px;
+        margin: 15px 25px 5px 25px;
+    }
+}
