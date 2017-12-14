@@ -21,7 +21,7 @@ apiM.dataSetup = function(req) {
     if (
         req.query.saving
         && req.query.day
-        && req.query.month 
+        && req.query.month
         && req.query.year
         && req.query.crypto
         && !isNaN(req.query.saving)
@@ -32,15 +32,15 @@ apiM.dataSetup = function(req) {
     }
 }
 
-apiM.createSavings = function(cryptoData, userData) {
+apiM.createFinalData = function(foundData, userData) {
     // var setup
-    var cryptoSavings = [];
-    var cryptoAmount = 0;
-    var cryptoValue = 0;
-    var spentAmount = 0;
+    var finalData = [];
+    // var cryptoAmount = 0;
+    // var cryptoValue = 0;
+    // var spentAmount = 0;
     var inputDate = userData.month + ' ' + userData.day + ' ' + userData.year;
-    var oldestDate = cryptoData[0]["date"];
-    var newestDate = cryptoData[cryptoData.length-1]["date"];
+    var oldestDate = foundData[0]["date"];
+    var newestDate = foundData[foundData.length-1]["date"];
     // user's input: starting date
     // check if input date is not before/after the oldest/most recent date in DB
     if (new Date(inputDate).setHours(0,0,0,0) < oldestDate.setHours(0,0,0,0)) {
@@ -51,34 +51,33 @@ apiM.createSavings = function(cryptoData, userData) {
         var startingDate = new Date(inputDate).toDateString();
     }
     // user's input: saving amount
-    var savingAmount = Number(userData.saving);
-    // loop through BTC DB to create final array
-    cryptoData.forEach(function(data) {
+    // var savingAmount = Number(userData.saving);
+    // loop through DB to create final array
+    foundData.forEach(function(data) {
         if ((data["date"]).toDateString() === startingDate) {
             // update total amount of btc, it's current value and spent amount
-            spentAmount += savingAmount;
-            cryptoAmount += savingAmount / data["avgPrice"];
-            cryptoValue = cryptoAmount * data["avgPrice"];
+            // spentAmount += savingAmount;
+            // cryptoAmount += savingAmount / data["avgPrice"];
+            // cryptoValue = cryptoAmount * data["avgPrice"];
             // create saving obj
-            var cryptoSavingsObj = {
+            var dataObj = {
                 date: startingDate.substr(4), // gets rid of a day of the week
                 avgPrice: data["avgPrice"],
-                cryptoAmount: cryptoAmount.toFixed(6),
-                cryptoValue: cryptoValue.toFixed(2),
-                spent: spentAmount.toFixed(2)
+                // cryptoAmount: cryptoAmount.toFixed(6),
+                // cryptoValue: cryptoValue.toFixed(2),
+                // spent: spentAmount.toFixed(2)
             }
             // add saving obj to savings array
-            cryptoSavings.push(cryptoSavingsObj);
-            //update starting date to the next month
-            startingDate = apiM.addMonths(data["date"], 1).toDateString();
+            finalData.push(dataObj);
+            //update starting date to next day
+            startingDate = apiM.addDays(data["date"], 1).toDateString();
         }
     });
-    var result = {
-        amount: cryptoAmount,
-        savings: cryptoSavings
-    }
-    
-    return result;
+    // var result = {
+    //     amount: cryptoAmount,
+    //     savings: cryptoSavings
+    // }
+    return finalData;
 }
 
 apiM.addMonths = function(date, months) {
@@ -87,7 +86,13 @@ apiM.addMonths = function(date, months) {
   if (date.getDate() != d) {
     date.setDate(0);
   }
-  
+
+  return date;
+}
+
+apiM.addDays = function(date, days) {
+  date.setDate(date.getDate() + days);
+
   return date;
 }
 
