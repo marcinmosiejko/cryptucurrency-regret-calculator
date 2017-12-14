@@ -26,7 +26,10 @@ router.get("/calculator", function(req, res) {
                 var finalData = apiM.createFinalData(foundData, userData);
                 //===========================================================
                 // get date of oldest data point
-                var oldestDataPoint = (foundData[0].date).toDateString().substr(4);
+                var oldestDataPoint = (foundData[0].date).toDateString().substr(4); // gets rid of the day of the week
+                }
+                if (foundData[foundData.length - 1]) {
+                    var latestPrice = (foundData[foundData.length - 1].avgPrice);
                 }
                 //===========================================================
                 // RENDER! :)
@@ -34,6 +37,7 @@ router.get("/calculator", function(req, res) {
                     {
                         data: finalData,
                         userData: userData,
+                        latestPrice: latestPrice,
                         oldestDataPoint: oldestDataPoint
                     }
                 )

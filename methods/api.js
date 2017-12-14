@@ -35,9 +35,6 @@ apiM.dataSetup = function(req) {
 apiM.createFinalData = function(foundData, userData) {
     // var setup
     var finalData = [];
-    // var cryptoAmount = 0;
-    // var cryptoValue = 0;
-    // var spentAmount = 0;
     var inputDate = userData.month + ' ' + userData.day + ' ' + userData.year;
     var oldestDate = foundData[0]["date"];
     var newestDate = foundData[foundData.length-1]["date"];
@@ -50,44 +47,22 @@ apiM.createFinalData = function(foundData, userData) {
     } else {
         var startingDate = new Date(inputDate).toDateString();
     }
-    // user's input: saving amount
-    // var savingAmount = Number(userData.saving);
     // loop through DB to create final array
     foundData.forEach(function(data) {
         if ((data["date"]).toDateString() === startingDate) {
-            // update total amount of btc, it's current value and spent amount
-            // spentAmount += savingAmount;
-            // cryptoAmount += savingAmount / data["avgPrice"];
-            // cryptoValue = cryptoAmount * data["avgPrice"];
-            // create saving obj
+            // create obj
             var dataObj = {
-                date: startingDate.substr(4), // gets rid of a day of the week
-                avgPrice: data["avgPrice"],
-                // cryptoAmount: cryptoAmount.toFixed(6),
-                // cryptoValue: cryptoValue.toFixed(2),
-                // spent: spentAmount.toFixed(2)
+                date: startingDate.substr(4), // gets rid of the day of the week
+                avgPrice: data["avgPrice"]
             }
-            // add saving obj to savings array
+            // add obj to final array
             finalData.push(dataObj);
             //update starting date to next day
             startingDate = apiM.addDays(data["date"], 1).toDateString();
         }
     });
-    // var result = {
-    //     amount: cryptoAmount,
-    //     savings: cryptoSavings
-    // }
+
     return finalData;
-}
-
-apiM.addMonths = function(date, months) {
-  var d = date.getDate();
-  date.setMonth(date.getMonth() + +months);
-  if (date.getDate() != d) {
-    date.setDate(0);
-  }
-
-  return date;
 }
 
 apiM.addDays = function(date, days) {

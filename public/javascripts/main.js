@@ -5,10 +5,10 @@ var submitForm;
 define(['methods', 'chart'], function(methods, Chart) {
     /////////////////////////////////////////
     // BASIC SETUP
-    var selectedCrypto = "bitcoin";
+    var selected = "bitcoin";
     var cryptoButtons = document.querySelectorAll(".crypto-btn");
     // print oldest data point
-    methods.printOldest(selectedCrypto);
+    methods.printOldest(selected);
     // Crypto buttons event listeners
     for (var i = 0; i < cryptoButtons.length; i++) {
         cryptoButtons[i].addEventListener("click", function() {
@@ -17,30 +17,35 @@ define(['methods', 'chart'], function(methods, Chart) {
                 cryptoButtons[j].classList.remove("selected");
             }
             // update selected crypto
-            selectedCrypto = this.classList[0];
+            selected = this.classList[0];
             // select clicked button
             this.classList.add("selected");
             // print oldest data point message
-            methods.printOldest(selectedCrypto);
-            
+            console.log(selected);
+            methods.printOldest(selected);
+
         });
     }
-    
+
     //////////////////////////////////////////
     // HANDLE SUBMIT FORM
     submitForm = function() {
         // build request url
-        var url = methods.buildUrl(selectedCrypto);
+        var url = methods.buildUrl(selected);
         var request = new XMLHttpRequest();
         request.open("GET", url);
         request.onload = function() {
             if (this.status == 200) {
-                var dbData = JSON.parse(request.responseText);
+                var rawData = JSON.parse(request.responseText);
+                // create monthly savings data
+                var savings = methods.createSavings(rawData);
+                console.log(savings);
                 // print total savings
-                var summary = methods.buildSummary(dbData, selectedCrypto);
+                var latestPrice = rawData.latestPrice;
+                var summary = methods.buildSummary(savings, selected, latestPrice);
                 document.getElementById("summary").innerHTML = summary;
                 // print table
-                var table = methods.buildTable(dbData);
+                var table = methods.buildTable(savings, latestPrice);
                 document.getElementById("table").innerHTML = table;
                 // add title for summary and historical performance
                 document.getElementById("summary-title").innerHTML = methods.summaryTitle;
@@ -48,8 +53,9 @@ define(['methods', 'chart'], function(methods, Chart) {
                 // add disclaimer
                 document.getElementById("disclaimer").innerHTML = methods.disclaimer;
                 // print chart
+                var userData = rawData.userData;
                 var cryptoChart = document.getElementById('cryptoChart').getContext('2d');
-                var chartData = methods.buildChartData(dbData);
+                var chartData = methods.buildChartData(savings, userData, latestPrice);
                 Chart.defaults.global.defaultFontFamily = 'Lato';
                 Chart.defaults.global.defaultFontSize = 16;
                 Chart.defaults.global.defaultFontColor = '#333';
@@ -63,5 +69,3 @@ define(['methods', 'chart'], function(methods, Chart) {
     // run at refresh to plot default data
     submitForm();
 });
-
-
