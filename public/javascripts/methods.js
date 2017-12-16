@@ -123,6 +123,16 @@ define([""], function(){
         return table;
     }
 
+    methods.printChart = function(userData, savings, latestPrice) {
+      var userData = rawData.userData;
+      var cryptoChart = document.getElementById('cryptoChart').getContext('2d');
+      var chartData = this.buildChartData(savings, userData, latestPrice);
+      Chart.defaults.global.defaultFontFamily = 'Lato';
+      Chart.defaults.global.defaultFontSize = 16;
+      Chart.defaults.global.defaultFontColor = '#333';
+      var massPopChart = new Chart(cryptoChart, chartData);
+    }
+
     methods.buildChartData = function(savings, userData, latestPrice) {
         var data = {
           type:'line',
@@ -175,12 +185,6 @@ define([""], function(){
         return data;
     }
 
-    methods.buildOldest = function(data) {
-      var oldest = "oldest data point: " + data;
-
-      return oldest;
-    }
-
     methods.printOldest = function(selected) {
       var url = this.buildUrl(selected);
       var requestOldest = new XMLHttpRequest();
@@ -194,9 +198,18 @@ define([""], function(){
       requestOldest.send();
     }
 
+    methods.buildOldest = function(data) {
+      var oldest = "oldest data point: " + data;
+
+      return oldest;
+    }
+
     methods.disclaimer = "Data does not include transaction fees. All calculations rounded. Price data from CoinMarketCap website. Past performance is not a guarantee of future results."
+
     methods.performanceTitle = "<h3>HISTORICAL PERFORMANCE</h3>";
+
     methods.summaryTitle = "<h3>SUMMARY</h3>";
+
     methods.errorTitle = "<h3>SORRY, SOMETHING WENT WRONG</h3>";
 
     return methods;

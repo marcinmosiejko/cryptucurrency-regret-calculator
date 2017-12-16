@@ -38,11 +38,11 @@ define(['methods', 'chart'], function(methods, Chart) {
                 var rawData = JSON.parse(request.responseText);
                 // create monthly savings data
                 var savings = methods.createSavings(rawData);
-                // print total savings
+                // print total savings summary
                 var latestPrice = rawData.latestPrice;
                 var summary = methods.buildSummary(savings, selected, latestPrice);
                 document.getElementById("summary").innerHTML = summary;
-                // print table
+                // print main table
                 var table = methods.buildTable(savings, latestPrice);
                 document.getElementById("table").innerHTML = table;
                 // add title for summary and historical performance
@@ -51,13 +51,8 @@ define(['methods', 'chart'], function(methods, Chart) {
                 // add disclaimer
                 document.getElementById("disclaimer").innerHTML = methods.disclaimer;
                 // print chart
-                var userData = rawData.userData;
-                var cryptoChart = document.getElementById('cryptoChart').getContext('2d');
-                var chartData = methods.buildChartData(savings, userData, latestPrice);
-                Chart.defaults.global.defaultFontFamily = 'Lato';
-                Chart.defaults.global.defaultFontSize = 16;
-                Chart.defaults.global.defaultFontColor = '#333';
-                var massPopChart = new Chart(cryptoChart, chartData);
+                methods.printChart(userData, savings, latestPrice);
+
             } else {
                 document.getElementById("summary-title").innerHTML = methods.errorTitle;
             }
