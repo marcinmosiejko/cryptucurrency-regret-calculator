@@ -21,7 +21,6 @@ define(['methods', 'chart'], function(methods, Chart) {
             // select clicked button
             this.classList.add("selected");
             // print oldest data point message
-            console.log(selected);
             methods.printOldest(selected);
 
         });
