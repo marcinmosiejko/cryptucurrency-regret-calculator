@@ -39,7 +39,6 @@ define(['methods', 'chart'], function(methods, Chart) {
                 var rawData = JSON.parse(request.responseText);
                 // create monthly savings data
                 var savings = methods.createSavings(rawData);
-                console.log(savings);
                 // print total savings
                 var latestPrice = rawData.latestPrice;
                 var summary = methods.buildSummary(savings, selected, latestPrice);
