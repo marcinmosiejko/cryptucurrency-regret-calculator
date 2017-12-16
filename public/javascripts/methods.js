@@ -1,5 +1,26 @@
 define([""], function(){
+
     var methods = {};
+
+    methods.selected = "bitcoin";
+
+    methods.addCryptoListeners = function() {
+      var cryptoButtons = document.querySelectorAll(".crypto-btn");
+      for (var i = 0; i < cryptoButtons.length; i++) {
+          cryptoButtons[i].addEventListener("click", function() {
+              // deselect all buttons
+              for (var j = 0; j < cryptoButtons.length; j++) {
+                  cryptoButtons[j].classList.remove("selected");
+              }
+              // update selected crypto
+              methods.selected = this.classList[0];
+              // select clicked button
+              this.classList.add("selected");
+              // print oldest data point message
+              methods.printOldest(methods.selected);
+          });
+      }
+    }
 
     methods.createSavings = function(rawData) {
       // var setup
@@ -123,7 +144,7 @@ define([""], function(){
         return table;
     }
 
-    methods.printChart = function(userData, savings, latestPrice) {
+    methods.printChart = function(rawData, savings, latestPrice) {
       var userData = rawData.userData;
       var cryptoChart = document.getElementById('cryptoChart').getContext('2d');
       var chartData = this.buildChartData(savings, userData, latestPrice);

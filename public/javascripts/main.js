@@ -5,32 +5,18 @@ var submitForm;
 define(['methods', 'chart'], function(methods, Chart) {
     /////////////////////////////////////////
     // BASIC SETUP
-    var selected = "bitcoin";
-    var cryptoButtons = document.querySelectorAll(".crypto-btn");
-    // print oldest data point
-    methods.printOldest(selected);
     // Crypto buttons event listeners
-    for (var i = 0; i < cryptoButtons.length; i++) {
-        cryptoButtons[i].addEventListener("click", function() {
-            // deselect all buttons
-            for (var j = 0; j < cryptoButtons.length; j++) {
-                cryptoButtons[j].classList.remove("selected");
-            }
-            // update selected crypto
-            selected = this.classList[0];
-            // select clicked button
-            this.classList.add("selected");
-            // print oldest data point message
-            methods.printOldest(selected);
+    methods.addCryptoListeners();
+    // print oldest data point
+    methods.printOldest(methods.selected);
 
-        });
-    }
+
 
     //////////////////////////////////////////
     // HANDLE SUBMIT FORM
     submitForm = function() {
         // build request url
-        var url = methods.buildUrl(selected);
+        var url = methods.buildUrl(methods.selected);
         var request = new XMLHttpRequest();
         request.open("GET", url);
         request.onload = function() {
@@ -38,21 +24,20 @@ define(['methods', 'chart'], function(methods, Chart) {
                 var rawData = JSON.parse(request.responseText);
                 // create monthly savings data
                 var savings = methods.createSavings(rawData);
-                // print total savings summary
                 var latestPrice = rawData.latestPrice;
-                var summary = methods.buildSummary(savings, selected, latestPrice);
+                // add titles for summary and historical performance
+                document.getElementById("summary-title").innerHTML = methods.summaryTitle;
+                document.getElementById("performance-title").innerHTML = methods.performanceTitle;
+                // print total savings summary
+                var summary = methods.buildSummary(savings, methods.selected, latestPrice);
                 document.getElementById("summary").innerHTML = summary;
+                // print chart
+                methods.printChart(rawData, savings, latestPrice);
                 // print main table
                 var table = methods.buildTable(savings, latestPrice);
                 document.getElementById("table").innerHTML = table;
-                // add title for summary and historical performance
-                document.getElementById("summary-title").innerHTML = methods.summaryTitle;
-                document.getElementById("performance-title").innerHTML = methods.performanceTitle;
                 // add disclaimer
                 document.getElementById("disclaimer").innerHTML = methods.disclaimer;
-                // print chart
-                methods.printChart(userData, savings, latestPrice);
-
             } else {
                 document.getElementById("summary-title").innerHTML = methods.errorTitle;
             }
