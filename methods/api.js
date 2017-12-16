@@ -33,36 +33,59 @@ apiM.dataSetup = function(req) {
 }
 
 apiM.createFinalData = function(foundData, userData) {
-    // var setup
-    var finalData = [];
-    var inputDate = userData.month + ' ' + userData.day + ' ' + userData.year;
-    var oldestDate = foundData[0]["date"];
-    var newestDate = foundData[foundData.length-1]["date"];
-    // user's input: starting date
-    // check if input date is not before/after the oldest/most recent date in DB
-    if (new Date(inputDate).setHours(0,0,0,0) < oldestDate.setHours(0,0,0,0)) {
-        var startingDate = oldestDate.toDateString();
-    } else if (new Date(inputDate).setHours(0,0,0,0) >= newestDate.setHours(0,0,0,0)) {
-        var startingDate = newestDate.toDateString();
-    } else {
-        var startingDate = new Date(inputDate).toDateString();
-    }
-    // loop through DB to create final array
-    foundData.forEach(function(data) {
-        if ((data["date"]).toDateString() === startingDate) {
-            // create obj
-            var dataObj = {
-                date: startingDate.substr(4), // gets rid of the day of the week
-                avgPrice: data["avgPrice"]
-            }
-            // add obj to final array
-            finalData.push(dataObj);
-            //update starting date to next day
-            startingDate = apiM.addDays(data["date"], 1).toDateString();
-        }
-    });
+    // starting date setup
+    var startingDate = this.startingDateSetup(foundData, userData);
+    // build final data array
+    finalData = this.buildDataArray(foundData, startingDate);
 
     return finalData;
+}
+
+////////////////////////////////////////////////////////
+// SUPPORTING METHODS
+
+apiM.startingDateSetup = function(foundData, userData) {
+  // dates setup
+  var inputDate = userData.month + ' ' + userData.day + ' ' + userData.year;
+  var oldestDate = foundData[0]["date"];
+  var newestDate = foundData[foundData.length-1]["date"];
+  // starting date setup
+  var startingDate = this.createStartingDate(inputDate, newestDate, oldestDate);
+
+  return startingDate;
+}
+
+apiM.createStartingDate = function(input, newest, oldest) {
+  // check if input date is not before/after the oldest/most recent date in DB
+  if (new Date(input).setHours(0,0,0,0) < oldest.setHours(0,0,0,0)) {
+      var starting = oldest.toDateString();
+  } else if (new Date(input).setHours(0,0,0,0) >= newest.setHours(0,0,0,0)) {
+      var starting = newest.toDateString();
+  } else {
+      var starting = new Date(input).toDateString();
+  }
+
+  return starting;
+}
+
+apiM.buildDataArray = function(foundData, startingDate) {
+  var finalData = [];
+  // loop through DB to create final array
+  foundData.forEach(function(data) {
+      if ((data["date"]).toDateString() === startingDate) {
+          // create obj
+          var dataObj = {
+              date: startingDate.substr(4), // gets rid of the day of the week
+              avgPrice: data["avgPrice"]
+          }
+          // add obj to final array
+          finalData.push(dataObj);
+          //update starting date to next day
+          startingDate = apiM.addDays(data["date"], 1).toDateString();
+      }
+  });
+
+  return finalData;
 }
 
 apiM.addDays = function(date, days) {
