@@ -10,11 +10,13 @@ var express             = require("express"),
     seedingLatest       = require("./seeds/latest"),
     // ENV
     port                = process.env.PORT || 3000,
-    ip                  = process.env.IP || "localhost";
+    ip                  = process.env.IP || "localhost",
+    // DB
+    dbUrl               = process.env.DBURL || "mongodb://localhost/regret_calculator";
 
 // SETUP
 mongoose:mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost/regret_calculator", {useMongoClient: true});
+mongoose.connect(dbUrl, {useMongoClient: true});
 app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 //SEED THE DB
