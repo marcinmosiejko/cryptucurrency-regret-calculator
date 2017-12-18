@@ -10,7 +10,7 @@ var express             = require("express"),
     seedingLatest       = require("./seeds/latest"),
     // ENV
     port                = process.env.PORT || 3000,
-    ip                  = process.env.IP || "localhost",
+    ip                  = process.env.IP || "0.0.0.0",
     // DB
     dbUrl               = process.env.DBURL || "mongodb://localhost/regret_calculator";
 
