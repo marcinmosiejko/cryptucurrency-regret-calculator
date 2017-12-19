@@ -2,7 +2,8 @@ var Bitcoin         = require("../models/bitcoin"),
     Ethereum        = require("../models/ethereum"),
     Litecoin        = require("../models/litecoin"),
     Dash            = require("../models/dash"),
-    Monero          = require("../models/monero");
+    Monero          = require("../models/monero"),
+    Lisk            = require("../models/lisk");
 
 // ========================================================
 // DATA SETUP
@@ -24,6 +25,7 @@ var ethereum = new Crypto(Ethereum, "ethereum");
 var litecoin = new Crypto(Litecoin, "litecoin");
 var dash = new Crypto(Dash, "dash");
 var monero = new Crypto(Monero, "monero");
+var lisk = new Crypto(Lisk, "lisk");
 
 // ========================================================
 // CREATE SEEDS METHODS OBJECT
@@ -34,7 +36,8 @@ seedsM.cryptos = [
     ethereum,
     litecoin,
     dash,
-    monero
+    monero,
+    lisk
 ]
 
 seedsM.historicalCryptoData = function(data, url) {
@@ -51,7 +54,7 @@ seedsM.historicalCryptoData = function(data, url) {
         // push formatted data into cryptoData array
         cryptoData.push(cryptoObject);
     });
-    
+
     return cryptoData;
 }
 
@@ -61,7 +64,7 @@ seedsM.createLatestData = function(bodyParsed) {
         date: new Date().toDateString().substr(4), // get rid of day of the week and time
         avgPrice: latestPrice
     };
-    
+
     return latestData;
 }
 

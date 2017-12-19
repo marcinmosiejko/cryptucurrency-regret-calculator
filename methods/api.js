@@ -2,7 +2,8 @@ var Bitcoin         = require("../models/bitcoin"),
     Ethereum        = require("../models/ethereum"),
     Litecoin        = require("../models/litecoin"),
     Dash            = require("../models/dash"),
-    Monero          = require("../models/monero");
+    Monero          = require("../models/monero"),
+    Lisk            = require("../models/lisk");
 
 var apiM = {};
 
@@ -11,7 +12,8 @@ apiM.cryptos = {
     ethereum: Ethereum,
     litecoin: Litecoin,
     dash: Dash,
-    monero: Monero
+    monero: Monero,
+    lisk: Lisk
 }
 
 apiM.dataSetup = function(req) {

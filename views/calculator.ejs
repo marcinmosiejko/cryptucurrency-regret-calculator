@@ -2,9 +2,9 @@
 <main>
     <div class="container">
         <h2>CRYPTOCURRENCY REGRET CALCULATOR</h2>
-        
+
         <!-- FORM ------------------------------------->
-        
+
         <form method="GET" onsubmit="submitForm(); return false;">
             <div class="form-group font-large">
                 if I saved $
@@ -31,6 +31,10 @@
                 <div id="xmr">
                     <img src="/images/monero.png" class="monero crypto-btn">
                     <p>Monero</p>
+                </div>
+                <div id="lsk">
+                    <img src="/images/lisk.png" class="lisk crypto-btn">
+                    <p>Lisk</p>
                 </div>
             </div>
             <div class="form-group font-large">
@@ -71,9 +75,9 @@
             <button class="btn btn btn-info">calculate</button>
         </form>
         <hr>
-        
+
         <!-- CALCULATED DATA ------------------------->
-        
+
         <div id="summary-title"></div>
         <div id="summary"></div>
         <div id="performance-title"></div>
@@ -83,7 +87,7 @@
         <div id="table"></div>
         <div id="disclaimer"></div>
     </div>
-</main>   
+</main>
 <script data-main="javascripts/require/config.js" src="javascripts/require/require.js"></script>
 <script>
     require(["config"], function() {
