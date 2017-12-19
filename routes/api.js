@@ -6,7 +6,7 @@ var express         = require("express"),
 
 
 // CALC API - CALCULATE & RENDER CRYPTO SAVINGS
-router.get("/calculator", function(req, res) {
+router.get("/historical", function(req, res) {
     //====================================================================
     // check if there's proper user's input
     var userData = apiM.dataSetup(req);

@@ -100,7 +100,7 @@ define([""], function(){
         var month = mInput.options[mInput.selectedIndex].value;
         var day = dInput.options[dInput.selectedIndex].value;
 
-        var url = "/api/calculator?saving="+saving+"&crypto="+crypto+"&year="+year+"&month="+month+"&day="+day;
+        var url = "/api/historical?saving="+saving+"&crypto="+crypto+"&year="+year+"&month="+month+"&day="+day;
         return url;
     }
 
