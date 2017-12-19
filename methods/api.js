@@ -47,8 +47,8 @@ apiM.createFinalData = function(foundData, userData) {
 apiM.startingDateSetup = function(foundData, userData) {
   // dates setup
   var inputDate = userData.month + ' ' + userData.day + ' ' + userData.year;
-  var oldestDate = foundData[0]["date"];
-  var newestDate = foundData[foundData.length-1]["date"];
+  var oldestDate = foundData[0].date;
+  var newestDate = foundData[foundData.length-1].date;
   // starting date setup
   var startingDate = this.createStartingDate(inputDate, newestDate, oldestDate);
 
@@ -72,26 +72,19 @@ apiM.buildDataArray = function(foundData, startingDate) {
   var finalData = [];
   // loop through DB to create final array
   foundData.forEach(function(data) {
-      if ((data["date"]).toDateString() === startingDate) {
+      if ((data.date).setHours(0,0,0,0) >= new Date(startingDate).setHours(0,0,0,0)) {
           // create obj
           var dataObj = {
-              date: startingDate.substr(4), // gets rid of the day of the week
-              avgPrice: data["avgPrice"]
+              date: data.date.toDateString().substr(4), // gets rid of the day of the week
+              avgPrice: data.avgPrice
           }
           // add obj to final array
           finalData.push(dataObj);
-          //update starting date to next day
-          startingDate = apiM.addDays(data["date"], 1).toDateString();
       }
   });
 
   return finalData;
 }
 
-apiM.addDays = function(date, days) {
-  date.setDate(date.getDate() + days);
-
-  return date;
-}
 
 module.exports = apiM;
