@@ -20,7 +20,7 @@ mongoose.connect(dbUrl, {useMongoClient: true});
 app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 //SEED THE DB
-//seedingHistorical();
+seedingHistorical();
 seedingLatest();
 
 
